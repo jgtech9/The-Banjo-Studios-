@@ -27,7 +27,7 @@ export default function Footer() {
             <h3 className="text-sm font-semibold uppercase tracking-wider mb-4 text-primary-300 dark:text-primary-200">Connect</h3>
             <ul className="space-y-2">
               <li>
-                <a href="https://github.com/jgtech9" target="_blank" rel="noopener noreferrer" className={linkClass}>
+                <a href="https://github.com/TheBanjoStudios" target="_blank" rel="noopener noreferrer" className={linkClass}>
                   GitHub
                 </a>
               </li>
