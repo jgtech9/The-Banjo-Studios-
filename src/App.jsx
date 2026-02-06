@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Header from './components/Header'
 import Footer from './components/Footer'
 import Home from './pages/Home'
@@ -11,10 +11,42 @@ import Newsletter from './pages/Newsletter'
 import Team from './pages/Team'
 import NotFound from './pages/NotFound'
 
+function useScrollReveal() {
+  const location = useLocation()
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible')
+            observer.unobserve(entry.target)
+          }
+        })
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
+    )
+
+    const timer = setTimeout(() => {
+      const elements = document.querySelectorAll(
+        '.reveal, .reveal-left, .reveal-right, .reveal-scale'
+      )
+      elements.forEach((el) => observer.observe(el))
+    }, 50)
+
+    return () => {
+      clearTimeout(timer)
+      observer.disconnect()
+    }
+  }, [location.pathname])
+}
+
 function App() {
   const [darkMode, setDarkMode] = useState(
     localStorage.getItem('darkMode') === 'true'
   )
+
+  useScrollReveal()
 
   useEffect(() => {
     if (darkMode) {
